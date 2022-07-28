@@ -13,6 +13,7 @@ typedef struct vetor_t {
 } Vetor;
 
 Vetor* vetor_strings(FILE* arquivo);
+int busca_binaria_string(char** vet, char* k, int lo, int hi);
 void imprime_vetor(Vetor* vetor);
 void destroi_vetor(Vetor* vetor);
 

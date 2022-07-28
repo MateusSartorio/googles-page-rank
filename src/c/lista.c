@@ -43,8 +43,6 @@ void insere_na_lista(Lista* lista, char* string){
         lista->ult->prox = nova;
         lista->ult = nova;
     }
-
-
 }
 
 void retira_na_lista(Lista* lista, int posicao){

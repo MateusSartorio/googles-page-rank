@@ -28,19 +28,19 @@ int main(int argc, char** argv) {
     }
 
     Vetor* vetorIndex = vetor_strings(fi);
-    // imprime_vetor(vetorIndex);
+    //imprime_vetor(vetorIndex);
 
     Vetor* vetorStopwords = vetor_strings(fs);
     // imprime_vetor(vetorStopwords);
 
-    Grafo** g = le_grafo(fg, vetorIndex->tam);
-    //imprime_grafo(g, vetorIndex->tam);
+    Grafo** g = le_grafo(fg, vetorIndex);
+    imprime_grafo(g, vetorIndex->tam);
 
     RBT* tab_sim = indexador(vetorIndex, vetorStopwords, pages);
-    RBT_imprime(tab_sim);
+    // RBT_imprime(tab_sim);
 
     RBT_libera(tab_sim);
-    libera_grafo(g, vetorIndex->tam);
+    //libera_grafo(g, vetorIndex->tam);
     destroi_vetor(vetorIndex);
     destroi_vetor(vetorStopwords);
 

@@ -6,14 +6,25 @@
 #include <string.h>
 
 #include "lista.h"
+#include "vetor.h"
+
+typedef struct no_t {
+    char* chave;
+
+    int numEntradas;
+    No* entradas;
+
+    int numSaidas;
+    No* saidas;
+} No;
 
 typedef struct grafo_t {
-    char* chave;
-    Lista* adjacencias;
+    int tam;
+    No** vetNos;
 } Grafo;
 
 Grafo* init_grafo();
-Grafo** le_grafo(FILE* fg, int tam);
+Grafo** le_grafo(FILE* fg, Vetor* vetIndex);
 void imprime_grafo(Grafo** g, int tam);
 void libera_grafo(Grafo** g, int tam);
 
