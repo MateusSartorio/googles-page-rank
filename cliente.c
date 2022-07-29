@@ -34,13 +34,28 @@ int main(int argc, char** argv) {
     // imprime_vetor(vetorStopwords);
 
     Grafo** g = le_grafo(fg, vetorIndex);
-    imprime_grafo(g, vetorIndex->tam);
+    page_rank(g,vetorIndex->tam);
+    // imprime_grafo(g, vetorIndex->tam);
 
     RBT* tab_sim = indexador(vetorIndex, vetorStopwords, pages);
-    // RBT_imprime(tab_sim);
+    //RBT_imprime(tab_sim);
+
+    while(1) {
+        char* linha;
+        size_t size = 0;
+
+        getline(&linha, &size, stdin);
+        if(feof(stdin))
+            break;
+        
+        printf("%s\n", linha);
+
+
+        free(linha);
+    }
 
     RBT_libera(tab_sim);
-    //libera_grafo(g, vetorIndex->tam);
+    libera_grafo(g, vetorIndex->tam);
     destroi_vetor(vetorIndex);
     destroi_vetor(vetorStopwords);
 

@@ -4,26 +4,33 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include "lista.h"
 #include "vetor.h"
 
-typedef struct no_t {
+#define alfa 0.85
+#define epsilon 1e-6
+
+#define fabs(A) (A > 0 ? A : -A)
+
+typedef struct grafo_t Grafo;
+typedef struct list_int_t ListInt;
+
+struct list_int_t{
+    int index;
+    ListInt* prox;
+};
+
+struct grafo_t{
     char* chave;
+    double pr;
+    int numAdjacencias;
+    ListInt* entradas;
+};
 
-    int numEntradas;
-    No* entradas;
-
-    int numSaidas;
-    No* saidas;
-} No;
-
-typedef struct grafo_t {
-    int tam;
-    No** vetNos;
-} Grafo;
-
-Grafo* init_grafo();
+Grafo* init_grafo(char* chave, double pr);
+void page_rank(Grafo** g, int n);
 Grafo** le_grafo(FILE* fg, Vetor* vetIndex);
 void imprime_grafo(Grafo** g, int tam);
 void libera_grafo(Grafo** g, int tam);

@@ -1,61 +1,123 @@
 #include "../h/grafo.h"
 
-Grafo* init_grafo(char* chave) {
-    Grafo* graf = (Grafo*)malloc(sizeof(Grafo));
+static ListInt* init_listint(int index){
+    ListInt* li = (ListInt*)malloc(sizeof(ListInt));
+    li->index = index;
+    li->prox = NULL;
+    
+    return li;
+}
+
+Grafo* init_grafo(char* chave, double pr) {
+    Grafo* graf = (Grafo*) malloc(sizeof(Grafo));
     graf->chave = chave;
-    graf->adjacencias = NULL;
+    graf->pr = pr;
+    graf->numAdjacencias = 0;
+    graf->entradas = NULL;
 
     return graf;
 }
 
+static bool e(Grafo** g, double* vetAnt, int n) {
+    double cont = 0.0f;
+    for(int i = 0; i < n; i++)
+        cont += fabs((g[i]->pr - vetAnt[i])) / (double) n;
+
+    if(cont < epsilon)
+        return true;
+
+    return false;
+}
+
+static void rec_page_rank(Grafo** g, double* vetAnt, int n) {  
+    for(int i = 0; i < n; i++)
+        vetAnt[i] = g[i]->pr;
+
+    double cont = 0.0f;
+    for(int i = 0; i < n; i++) {
+        if(g[i]->numAdjacencias != 0) {
+            for(ListInt* j = g[i]->entradas; j; j = j->prox) {
+                cont += vetAnt[j->index]/g[j->index]->numAdjacencias;
+            }
+            cont = ( (1.0f - alfa)/ (double) n ) + alfa*cont;
+        }
+        else {
+            for(ListInt* j = g[i]->entradas; j; j = j->prox) {
+                cont += vetAnt[j->index]/g[j->index]->numAdjacencias;
+            }
+            cont = ( (1.0f - alfa)/ (double) n ) + alfa*vetAnt[i] + alfa*cont;
+        }
+        g[i]->pr = cont;
+        cont = 0.0f;
+    }
+    if(e(g, vetAnt, n))
+        return;
+    rec_page_rank(g, vetAnt, n);
+}
+
+void page_rank(Grafo** g, int n) {
+    double* vetAnt = (double*) malloc(n*sizeof(double));
+
+    for(int i = 0; i < n; i++)
+        vetAnt[i] = 1.0f/n;
+
+    rec_page_rank(g, vetAnt, n);
+    free(vetAnt);
+}
+
 Grafo** le_grafo(FILE* fg, Vetor* vetIndex) {
-    Grafo** g = (Grafo**) malloc((vetIndex->tam)*sizeof(Grafo*));
-    for(int i = 0; i < (vetIndex->tam); i++) g[i] = init_grafo(vetIndex->v[i]);
+    Grafo** g = (Grafo**) malloc(vetIndex->tam*sizeof(Grafo*));
+    for(int i = 0; i < vetIndex->tam; i++) g[i] = init_grafo(vetIndex->v[i], 1.0f/vetIndex->tam);
     
-    for(int i = 0; i < (vetIndex->tam); i++) {
+    for(int i = 0; i < vetIndex->tam; i++) {
         char* linha = NULL;
         size_t size = 0;
         getline(&linha, &size, fg);
 
-        //g[i] = init_grafo(strtok(linha, " "));
         char* influenciado = strtok(linha, " ");
-
+        int posInfluenciado = busca_binaria_string(vetIndex->v, influenciado, 0, vetIndex->tam);
+        if(posInfluenciado >= 0) g[posInfluenciado]->numAdjacencias;
         int n = atoi(strtok(NULL, " "));
-        int m = busca_binaria_string(vetIndex->v, influenciado, 0, vetIndex->tam -1);
-        if(m >= 0) g[m]->numSaidas = n;
+        g[posInfluenciado]->numAdjacencias = n;
 
-        int igual = 0;
-        for(int j = 0; j < n; j++){
-            if(igual == 1) break;
-            //insere_na_lista(g[i]->adjacencias, strtok(NULL, " \n"));
-            char* chaveAtual = strtok(NULL, " \n");
-            int posInfluenciador = busca_binaria_string(vetIndex->v, chaveAtual, 0, vetIndex->tam -1);
-            printf("influenciado = %d, influenciador: %d\n", m,posInfluenciador);
-            Grafo* cont = NULL;
-            for(cont = g[posInfluenciador]; cont!=NULL; cont = cont->adjacencias){
-                if(strcmp(cont->chave, influenciado) == 0) igual = 1;
+        for(int i = 0; i < n; i++){
+            char* influenciador = strtok(NULL, " \n");
+            int posInfluenciador = busca_binaria_string(vetIndex->v, influenciador, 0, vetIndex->tam);
+
+            if(!g[posInfluenciador]->entradas){
+                g[posInfluenciador]->entradas = init_listint(posInfluenciado);
+            }else{
+                ListInt* count = g[posInfluenciador]->entradas;
+                for(count; count->prox; count = count->prox){}
+                count->prox = init_listint(posInfluenciado);
             }
-            if(igual != 1)cont = g[m];
         }
+        free(linha);
     }
 
     return g;
 }
 
 void imprime_grafo(Grafo** g, int tam) {
-    for(int i = 0; i < tam; i++){
-        printf("Nó: <%s> ", g[i]->chave);
-        for(Grafo* cont = g[i]->adjacencias; cont!=NULL; cont = cont->adjacencias){
-            printf("%s ", cont->chave);
+    for(int i = 0; i < tam; i++) {
+        printf("%s, pr: %0.16f | ", g[i]->chave, g[i]->pr);
+        for(ListInt* temp = g[i]->entradas; temp; temp = temp->prox){
+            printf("%s ", g[temp->index]->chave);
         }
-        putchar('\n');
+        printf("\n");
     }
 }
 
 void libera_grafo(Grafo** g, int tam) {
     for(int i = 0; i < tam; i++) {
-        free(g[i]->chave);
-        //destroi_lista(g[i]->adjacencias);
+        //free(g[i]->chave);
+        ListInt* cont = g[i]->entradas;
+        ListInt* temp;
+        while(cont) {
+            temp = cont->prox;
+            free(cont);
+            cont = temp;
+        }
         free(g[i]);
     }
     free(g);

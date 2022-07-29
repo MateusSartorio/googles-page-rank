@@ -23,7 +23,7 @@ Vetor* vetor_strings(FILE* arquivo) {
             vetor->v = (char**)realloc(vetor->v, tamMax*sizeof(char*));
         }
     }
-    vetor->v = (char**) realloc(vetor->v, vetor->tam*sizeof(char*));
+    vetor->v = (char**)realloc(vetor->v, vetor->tam*sizeof(char*));
 
     qsort(vetor->v, vetor->tam, sizeof(char*), compare);
 
@@ -40,7 +40,7 @@ int busca_binaria_string(char** vet, char* k, int lo, int hi) {
     if(!cmp)
         return mid;
     else if(cmp < 0)
-        return busca_binaria_string(vet, k, lo, mid - 1);
+        return busca_binaria_string(vet, k, lo, mid -1);
     else
         return busca_binaria_string(vet, k, mid + 1, hi);
 }

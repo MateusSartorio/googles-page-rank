@@ -1,8 +1,0 @@
-{
-    "makefile.extensionOutputFolder": "./.vscode",
-    "files.associations": {
-        "*.c": "c",
-        "grafo.h": "c",
-        "lista.h": "c"
-    }
-}
