@@ -1,0 +1,10 @@
+make: Entering directory '/home/mateus/Desktop/Faculdade/Quinto_Periodo/Tecnicas_de_Busca_e_Ordenacao/Trabalho_III'
+gcc -c cliente.c
+gcc -c   -c -o src/c/tabela_simbolos.o src/c/tabela_simbolos.c
+gcc -c   -c -o src/c/indexador.o src/c/indexador.c
+gcc -c   -c -o src/c/lista.o src/c/lista.c
+gcc -c   -c -o src/c/vetor.o src/c/vetor.c
+gcc -c   -c -o src/c/grafo.o src/c/grafo.c
+gcc -o trab3 cliente.o src/c/tabela_simbolos.o src/c/indexador.o src/c/lista.o src/c/vetor.o src/c/grafo.o
+make: Leaving directory '/home/mateus/Desktop/Faculdade/Quinto_Periodo/Tecnicas_de_Busca_e_Ordenacao/Trabalho_III'
+ 

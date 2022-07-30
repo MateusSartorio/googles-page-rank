@@ -60,3 +60,8 @@ void destroi_vetor(Vetor* vetor) {
     free(vetor->v);
     free(vetor);
 }
+
+void libera_vetor(Vetor* vetor) {
+    free(vetor->v);
+    free(vetor);
+}

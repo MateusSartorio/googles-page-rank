@@ -4,18 +4,6 @@
 
 #include "../h/lista.h"
 
-typedef struct cel Celula;
-
-struct cel{
-    char* chave;
-    Celula* prox;
-};
-
-struct lista{
-    Celula* prim;
-    Celula* ult;
-};
-
 Lista* inicia_lista(){
     Lista* lista = (Lista*)malloc(sizeof(Lista));
 
@@ -71,6 +59,11 @@ void retira_na_lista(Lista* lista, int posicao){
 }
 
 void imprime_lista(Lista* lista){
+    if(!lista) {
+        printf("Lista invalida! - imprime_lista()\n");
+        exit(1);
+    }
+
     Celula* cont = lista->prim;
 
     for(cont; cont!=NULL;cont = cont->prox){

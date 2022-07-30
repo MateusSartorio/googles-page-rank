@@ -1,6 +1,6 @@
 #include "../h/indexador.h"
 
-static char* to_lower(char* str) {
+char* to_lower(char* str) {
     for(int i = 0; str[i]; i++)
         str[i] = tolower(str[i]);
 
