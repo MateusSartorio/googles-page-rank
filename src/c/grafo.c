@@ -1,5 +1,6 @@
 #include "../h/grafo.h"
 
+// Incializa uma lista encadeada de inteiros
 static ListInt* init_listint(int index){
     ListInt* li = (ListInt*)malloc(sizeof(ListInt));
     li->index = index;
@@ -18,6 +19,7 @@ Grafo* init_grafo(char* chave, double pr) {
     return graf;
 }
 
+// Função responsável por verificar se a diferença entre o page rank atual é significantemente menor que a do page rank anterior
 static bool e(Grafo** g, double* vetAnt, int n) {
     double cont = 0.0f;
     for(int i = 0; i < n; i++)
@@ -29,6 +31,7 @@ static bool e(Grafo** g, double* vetAnt, int n) {
     return false;
 }
 
+// Funcao recursiva chamada por page_rank(), que calcula o novo page rank a partir do vetor de page ranks anteriores
 static void rec_page_rank(Grafo** g, double* vetAnt, int n) {  
     for(int i = 0; i < n; i++)
         vetAnt[i] = g[i]->pr;
@@ -110,7 +113,6 @@ void imprime_grafo(Grafo** g, int tam) {
 
 void libera_grafo(Grafo** g, int tam) {
     for(int i = 0; i < tam; i++) {
-        //free(g[i]->chave);
         ListInt* cont = g[i]->entradas;
         ListInt* temp;
         while(cont) {

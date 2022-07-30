@@ -1,5 +1,6 @@
 #include "../h/vetor.h"
 
+// Compara dois elementos do tipo vetor pelas suas chaves
 static int compare(const void* s1, const void* s2){
     char* c1 = *((char**)s1);
     char* c2 = *((char**)s2);
