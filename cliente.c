@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     FILE* fs = fopen(stopwords, "r");
     FILE* fg = fopen(graph, "r");
 
-    FILE* fp = fopen("./entrada/searches.txt", "r");
+    FILE* fp = fopen("./entrada/searches2.txt", "r");
 
     if(!fi || !fs || !fg) {
         printf("Erro na abertura dos arquivos!\n");
@@ -32,8 +32,8 @@ int main(int argc, char** argv) {
 
     RBT* tab_sim = indexador(vetorIndex, vetorStopwords, pages);
 
-    processa_consultas(tab_sim, vetorStopwords, vetorIndex, g, fp);
-    // processa_consultas(tab_sim, vetorStopwords, vetorIndex, g, stdin);
+    // processa_consultas(tab_sim, vetorStopwords, vetorIndex, g, fp);
+    processa_consultas(tab_sim, vetorStopwords, vetorIndex, g, stdin);
 
     RBT_libera(tab_sim);
     libera_grafo(g, vetorIndex->tam);

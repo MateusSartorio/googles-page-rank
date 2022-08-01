@@ -2,13 +2,12 @@
 
 void processa_consultas(RBT* tab_sim, Vetor* vetorStopwords, Vetor* vetIndex, Grafo** grafo, FILE* fp) {
     while(1) {
-        if(feof(fp))
-            break;
-
         char* linha = NULL;
         size_t size = 0;
 
-        getline(&linha, &size, fp);
+        int numChars = getline(&linha, &size, fp);
+        if(numChars <= 1){free(linha);break;}
+
         char* copiaLinha = strdup(linha);
 
         to_lower(linha);
@@ -43,7 +42,7 @@ void processa_consultas(RBT* tab_sim, Vetor* vetorStopwords, Vetor* vetIndex, Gr
         }
 
         if(naoEncontrado) {
-            printf("search:%s\n", strtok(linha, "\n"));
+            printf("search:%s\n", strtok(copiaLinha, "\n"));
             printf("pages:\n");
             printf("pr:\n");
         }else {
