@@ -10,7 +10,7 @@ Quando um usuário digita um termo em uma máquina de busca, há interesse não 
 Nos anos 90, havia um interesse muito grande em resolver esse problema, sendo que várias abordagens foram experimentadas. Por volta de 1997/1998, os criadores do Google propuseram o PageRank, método que serve como base para novos algoritmos até os dias de hoje. O princípio básico do PageRank consiste no fato de que a importância de uma página Web não depende de seu conteúdo, autor, quem a possui, onde está hospedada, etc., mas sim de quão influente essa página é sobre outras páginas da Web. Nesse contexto, a influência de uma página sobre outra é dada pela existência de um link entre elas.
 
 
-# Setup
+## Setup
 
 * Certifique-se que tenha ````GCC ^11.3``` e ````Makefile ^4.0``` instalados.
 
