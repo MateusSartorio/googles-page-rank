@@ -3,7 +3,7 @@
 O objetivo deste trabalho é aplicar o conceito de Tabela de Símbolos para o desenvolvimento de uma mini máquina de busca. O algorítimo utilizado é o PageRank, desenvolvido pelo Google para a primeira versão de sua máquina de busca.
 
 <p align="center">
-  <img src="https://github.com/waldyr/Sublime-Installer/blob/master/sublime_text.png?raw=true" alt="page rank schema"/>
+  <img src="https://github.com/MateusSartorio/googles-page-rank/assets/69646100/9728c7d0-a143-4101-8348-bd2708574b00" alt="page rank schema"/>
 </p>
 
 Quando um usuário digita um termo em uma máquina de busca, há interesse não apenas que os resultados obtidos sejam relevantes, mas também que os mais relevantes sejam apresentados primeiro. Em outras palavras, dadas as páginas que contêm o termo buscado (ou conteúdo relevante aos termos buscados), em que ordem essas páginas devem ser apresentadas pela máquina de busca?
